@@ -1,61 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Among Us Character</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #111;
-    }
-    canvas {
-      background: transparent;
-    }
-  </style>
-</head>
-<body>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Among Us Face AR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<canvas id="amongus" width="300" height="400"></canvas>
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
-<script>
-  const canvas = document.getElementById("amongus");
-  const ctx = canvas.getContext("2d");
+    <!-- MindAR Face -->
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script>
+  </head>
 
-  // Body
-  ctx.fillStyle = "#e63946";
-  ctx.beginPath();
-  ctx.moveTo(100, 80);
-  ctx.quadraticCurveTo(60, 200, 100, 320);
-  ctx.lineTo(200, 320);
-  ctx.quadraticCurveTo(240, 200, 200, 80);
-  ctx.quadraticCurveTo(150, 40, 100, 80);
-  ctx.fill();
+  <body>
+    <a-scene
+      mindar-face
+      embedded
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+      color-space="sRGB"
+      renderer="colorManagement: true"
+    >
 
-  // Legs
-  ctx.fillRect(110, 320, 40, 50);
-  ctx.fillRect(150, 320, 40, 50);
+      <!-- Camera controlled by MindAR -->
+      <a-camera active="false"></a-camera>
 
-  // Backpack
-  ctx.fillStyle = "#c1121f";
-  ctx.beginPath();
-  ctx.ellipse(85, 180, 35, 70, 0, 0, Math.PI * 2);
-  ctx.fill();
+      <!-- Attach character to face center -->
+      <a-entity mindar-face-target="anchorIndex: 1">
 
-  // Visor
-  ctx.fillStyle = "#a8dadc";
-  ctx.beginPath();
-  ctx.ellipse(160, 140, 45, 25, 0, 0, Math.PI * 2);
-  ctx.fill();
+        <!-- Among Us Body -->
+        <a-entity
+          geometry="primitive: capsule; radius: 0.18; height: 0.45"
+          material="color: #e63946"
+          position="0 -0.15 0"
+        ></a-entity>
 
-  // Visor highlight
-  ctx.fillStyle = "#f1faee";
-  ctx.beginPath();
-  ctx.ellipse(170, 130, 20, 10, 0, 0, Math.PI * 2);
-  ctx.fill();
-</script>
+        <!-- Backpack -->
+        <a-entity
+          geometry="primitive: box; width: 0.15; height: 0.25; depth: 0.12"
+          material="color: #c1121f"
+          position="-0.2 -0.15 -0.05"
+        ></a-entity>
 
-</body>
+        <!-- Visor -->
+        <a-entity
+          geometry="primitive: sphere; radius: 0.09"
+          material="color: #a8dadc"
+          position="0.15 0.02 0.15"
+          scale="1.4 0.8 0.8"
+        ></a-entity>
+
+        <!-- Visor highlight -->
+        <a-entity
+          geometry="primitive: sphere; radius: 0.03"
+          material="color: #f1faee"
+          position="0.18 0.06 0.18"
+        ></a-entity>
+
+      </a-entity>
+    </a-scene>
+  </body>
 </html>
